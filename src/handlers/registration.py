@@ -35,10 +35,9 @@ async def cmd_start(message: Message, state: FSMContext, db: AgnosticDatabase):
     )
 
     await state.set_state(RegStates.waiting_for_university)
-    text = '''
-Привіт! 👋
-Давай познайомимось
-Де ти навчаєшся? 🎓'''
+    text = 'Готовий розпочати захопливу подорож з BTW? 🚀\nСпершу давай трохи познайомимося!'
+    await message.answer(text)
+    text = 'Де ти навчаєшся?'
     await message.answer(text, reply_markup=university_keyboard)
 
 
@@ -53,9 +52,7 @@ async def reg_university(message: Message, state: FSMContext, db: AgnosticDataba
         }}
     )
     await state.set_state(RegStates.waiting_for_course)
-    text = '(можна робити якісь відпоіді, типу "оо найкращий університет" 😄)'
-    await message.answer(text)
-    text = 'На якому ти курсі? 📚'
+    text = 'На якому ти курсі?'
     await message.answer(text, reply_markup=course_keyboard)
 
 
@@ -70,7 +67,7 @@ async def reg_course(message: Message, state: FSMContext, db: AgnosticDatabase):
         }}
     )
     await state.set_state(RegStates.waiting_for_speciality)
-    text = 'Яка твоя спеціальність? 🛠️'
+    text = 'Яка твоя спеціальність?'
     await message.answer(text, reply_markup=speciality_keyboard)
 
 
@@ -84,8 +81,8 @@ async def reg_speciality(message: Message, state: FSMContext, db: AgnosticDataba
             'state': 'completed',
         }}
     )
-    text = 'Дякуємо за реєстрацію, це дуже важливо для нас! 💗'
+    text = 'Дякуємо за реєстрацію! Чекаємо тебе на BTW! 🌟'
     await message.answer(text, reply_markup=main_reply_keyboard)
-    text = 'Тепер ти можеш переглянути розклад та лекторів ⬇️⬇️⬇️'
+    text = 'Тепер ти можеш переглянути розклад заходу та дізнатися більше про наших спікерів'
     await message.answer(text, reply_markup=main_inline_keyboard)
     await state.clear()

@@ -30,6 +30,7 @@ speciality_keyboard = ReplyKeyboardRemove()
 main_reply_keyboard = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="Розклад")],
+        [KeyboardButton(text="Приєднатися до BEST")],
     ],
     resize_keyboard=True,
 )
@@ -37,6 +38,8 @@ main_reply_keyboard = ReplyKeyboardMarkup(
 main_inline_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="Розклад", callback_data="schedule")],
+        [InlineKeyboardButton(text="Приєднатися до BEST",
+                              url="https://docs.google.com/forms/d/e/1FAIpQLSdTcKMiPuStsqNnYsosn4wJmKXgpXpSWuq37gVVEk5OtcaT_w/viewform")],
     ],
     resize_keyboard=True,
 )

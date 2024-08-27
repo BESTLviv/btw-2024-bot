@@ -1,5 +1,6 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery, FSInputFile, InputMediaPhoto
+from aiogram.enums import ParseMode
 
 from src.data.schedule_text import schedule
 from src.keyboards import *
@@ -42,6 +43,14 @@ async def show_schedule2(message: Message):
                                reply_markup=schedule_keyboard(day),
                                parse_mode='HTML',
                                disable_web_page_preview=True)
+
+
+@router.message(F.text == "Приєднатися до BEST")
+async def join_best(message: Message):
+    link_text = "Форма для подачі"
+    url = "https://docs.google.com/forms/d/e/1FAIpQLSdTcKMiPuStsqNnYsosn4wJmKXgpXpSWuq37gVVEk5OtcaT_w/viewform"
+    text = f"[{link_text}]({url})"
+    await message.answer(text, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True)
 
 
 @router.callback_query(lambda c: c.data.startswith('schedule_'))
