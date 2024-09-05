@@ -37,7 +37,7 @@ async def cmd_start(message: Message, state: FSMContext, db: AgnosticDatabase):
     await state.set_state(RegStates.waiting_for_university)
     text = 'Готовий розпочати захопливу подорож з BTW? 🚀\nСпершу давай трохи познайомимося!'
     await message.answer(text)
-    text = 'Де ти навчаєшся?'
+    text = 'Де ти навчаєшся? (питання 1 з 3)'
     await message.answer(text, reply_markup=university_keyboard)
 
 
@@ -52,7 +52,7 @@ async def reg_university(message: Message, state: FSMContext, db: AgnosticDataba
         }}
     )
     await state.set_state(RegStates.waiting_for_course)
-    text = 'На якому ти курсі?'
+    text = 'На якому ти курсі? (питання 2 з 3)'
     await message.answer(text, reply_markup=course_keyboard)
 
 
@@ -67,7 +67,7 @@ async def reg_course(message: Message, state: FSMContext, db: AgnosticDatabase):
         }}
     )
     await state.set_state(RegStates.waiting_for_speciality)
-    text = 'Яка твоя спеціальність?'
+    text = 'Яка твоя спеціальність? (питання 3 з 3)'
     await message.answer(text, reply_markup=speciality_keyboard)
 
 
