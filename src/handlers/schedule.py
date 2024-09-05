@@ -13,17 +13,18 @@ def schedule_text(day):
     text += f"<b>🎓 Хто:</b> {schedule[day]['Хто']}\n"
     text += f"<b>📖 Тема:</b> {schedule[day]['Тема']}\n"
     text += f"<b>📃 Опис:</b> {schedule[day]['Опис']}\n"
-    text += "<i>може ще якісь контакти якщо є: інстаграм, ютуб..</i>\n"
     text += "\n"
     text += f'<b>🕘 Коли:</b> {schedule[day]["Коли"]} (<a href="{schedule[day]["Календар_url"]}">додати у Google Calendar↗️</a>)\n'
-    text += f'<b>📍 Де:</b> <a href="{schedule[day]["Корпус_url"]}">{schedule[day]["Корпус"]}</a>, {schedule[day]["Аудиторія"]}\n'
+    text += f'<b>📍 Де:</b> {schedule[day]["Аудиторія"]}, <a href="{schedule[day]["Корпус_url"]}">{schedule[day]["Корпус"]}</a>\n'
     return text
 
+
+# треба було лінк на фото записувати у schedule_text до відповідного дня, а не всі фото перейменовувати тд
 
 @router.callback_query(F.data == "schedule")
 async def show_schedule1(callback_query: CallbackQuery):
     day = 'Пн'
-    photo = FSInputFile(f"src/data/lecturers_photo/{day}.jpg")
+    photo = FSInputFile(f"src/data/lecturers_photo/{day}.png")
     text = schedule_text(day)
     await callback_query.answer('')
     await callback_query.message.answer_photo(photo=photo,
@@ -36,7 +37,7 @@ async def show_schedule1(callback_query: CallbackQuery):
 @router.message(F.text == "Розклад")
 async def show_schedule2(message: Message):
     day = 'Пн'
-    photo = FSInputFile(f"src/data/lecturers_photo/{day}.jpg")
+    photo = FSInputFile(f"src/data/lecturers_photo/{day}.png")
     text = schedule_text(day)
     await message.answer_photo(photo=photo,
                                caption=text,
@@ -47,8 +48,16 @@ async def show_schedule2(message: Message):
 
 @router.message(F.text == "Приєднатися до BEST")
 async def join_best(message: Message):
-    link_text = "Форма для подачі"
+    link_text = "Форма для подачі ↗️"
     url = "https://docs.google.com/forms/d/e/1FAIpQLSdTcKMiPuStsqNnYsosn4wJmKXgpXpSWuq37gVVEk5OtcaT_w/viewform"
+    text = f"[{link_text}]({url})"
+    await message.answer(text, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True)
+
+
+@router.message(F.text == "Приєднатися до чату")
+async def join_best(message: Message):
+    link_text = "BTW chat ↗️"
+    url = "https://t.me/+V-ZP4rwg--A3Yjcy"
     text = f"[{link_text}]({url})"
     await message.answer(text, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True)
 
@@ -56,7 +65,7 @@ async def join_best(message: Message):
 @router.callback_query(lambda c: c.data.startswith('schedule_'))
 async def change_schedule(callback_query: CallbackQuery):
     day = callback_query.data.split('_')[1]
-    photo = FSInputFile(f"src/data/lecturers_photo/{day}.jpg")
+    photo = FSInputFile(f"src/data/lecturers_photo/{day}.png")
     text = schedule_text(day)
     media = InputMediaPhoto(media=photo, caption=text, parse_mode='HTML')
     await callback_query.message.edit_media(media=media,
