@@ -53,7 +53,7 @@ async def send_message_to_all_users(message: Message, state: FSMContext, db: Agn
     async def send_message(user):
         nonlocal success_count, fail_count
         try:
-            await message.bot.send_message(user['user_id'], text)
+            await message.bot.send_message(user['user_id'], text, parse_mode='HTML')
             success_count += 1
         except Exception as e:
             fail_count += 1
