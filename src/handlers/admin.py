@@ -10,7 +10,7 @@ from motor.motor_asyncio import AsyncIOMotorCursor
 
 from src.keyboards import *
 
-CODE_WORD = 'омномном2'
+CODE_WORD = 'омномном3'
 router = Router()
 
 
@@ -20,7 +20,7 @@ class AdminStates(StatesGroup):
 
 @router.message(lambda message: message.text.lower() == CODE_WORD.lower())
 async def handle_text_message(message: Message):
-    await message.answer('вітаю в адмінці2', reply_markup=admin_keyboard)
+    await message.answer('вітаю в адмінці3', reply_markup=admin_keyboard)
 
 
 @router.callback_query(F.data == "send_to_all")
@@ -66,7 +66,7 @@ async def send_to_all(callback_query: CallbackQuery, db: AgnosticDatabase):
         try:
             await callback_query.message.bot.send_photo(user['user_id'], logo, caption=text, parse_mode='HTML',
                                                         reply_markup=bec_keyboard)
-            await asyncio.sleep(1)
+            await asyncio.sleep(0.5)
             success_count += 1
         except Exception as e:
             fail_count += 1
