@@ -48,8 +48,7 @@ async def send_to_all(callback_query: CallbackQuery, db: AgnosticDatabase):
     success_count = 0
     fail_count = 0
 
-    video_path = 'src/data/IMG_3028.MP4'
-    video = FSInputFile(video_path)
+    logo = FSInputFile('src/data/photo_2024-10-02_15-55-21.jpg')
     text = """Хай там що станеться у житті, саме інженери завжди відбудовували цей світ👷
 Сьогодні ми раді повідомити, що реєстрацію на BEST Engineering Competition відкрито!
 
@@ -65,7 +64,9 @@ async def send_to_all(callback_query: CallbackQuery, db: AgnosticDatabase):
     async def send_message(user):
         nonlocal success_count, fail_count
         try:
-            await callback_query.message.bot.send_video(user['user_id'], video, caption=text, parse_mode='HTML', reply_markup=bec_keyboard)
+            await callback_query.message.bot.send_photo(user['user_id'], logo, caption=text, parse_mode='HTML',
+                                                        reply_markup=bec_keyboard)
+            await asyncio.sleep(1)
             success_count += 1
         except Exception as e:
             fail_count += 1
