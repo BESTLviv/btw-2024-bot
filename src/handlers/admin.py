@@ -4,13 +4,13 @@ import logging
 from aiogram import Router, F
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import StatesGroup, State
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message, CallbackQuery, FSInputFile
 from motor.core import AgnosticDatabase
 from motor.motor_asyncio import AsyncIOMotorCursor
 
 from src.keyboards import *
 
-CODE_WORD = 'омномном'
+CODE_WORD = 'омномном2'
 router = Router()
 
 
@@ -20,7 +20,7 @@ class AdminStates(StatesGroup):
 
 @router.message(lambda message: message.text.lower() == CODE_WORD.lower())
 async def handle_text_message(message: Message):
-    await message.answer('вітаю в адмінці', reply_markup=admin_keyboard)
+    await message.answer('вітаю в адмінці2', reply_markup=admin_keyboard)
 
 
 @router.callback_query(F.data == "send_to_all")
@@ -39,6 +39,46 @@ async def send_to_all(callback_query: CallbackQuery, db: AgnosticDatabase):
 async def send_to_all(callback_query: CallbackQuery, db: AgnosticDatabase):
     all_registered_users = await db.users.count_documents({'state': 'completed'})
     await callback_query.message.answer(f"Кількість зареєстрованих користувачів: {all_registered_users}")
+
+
+@router.callback_query(F.data == "send_to_all_bec")
+async def send_to_all(callback_query: CallbackQuery, db: AgnosticDatabase):
+    users_cursor: AsyncIOMotorCursor = db.users.find({}, {'user_id': 1})
+
+    success_count = 0
+    fail_count = 0
+
+    video_path = 'src/data/IMG_3028.MP4'
+    video = FSInputFile(video_path)
+    text = """Хай там що станеться у житті, саме інженери завжди відбудовували цей світ👷
+Сьогодні ми раді повідомити, що реєстрацію на BEST Engineering Competition відкрито!
+
+<b>Подія відбудеться вже зовсім скоро, а саме 25-29 жовтня у Львові.</b>
+
+Тематика цьогорічних змагань — <b>military</b>, тому всі завдання будуть спрямовані на розв’язання проблем дотичних до війни чи повоєнної відбудови.
+
+Дві категорії на вибір пропонують перевірити свої як практичні (<b>Team Design</b>), так і теоретичні (<b>Case Study</b>) знання та навички.⚙️
+
+Чому зволікаєш?
+<b>Реєструйся за посиланням нижче і доведи, що майбутнє за інженерами!</b>"""
+
+    async def send_message(user):
+        nonlocal success_count, fail_count
+        try:
+            await callback_query.message.bot.send_video(user['user_id'], video, caption=text, parse_mode='HTML', reply_markup=bec_keyboard)
+            success_count += 1
+        except Exception as e:
+            fail_count += 1
+            logging.error(f"Помилка при відправці повідомлення користувачу {user['user_id']}: {e}")
+
+    tasks = []
+    async for user in users_cursor:
+        tasks.append(asyncio.create_task(send_message(user)))
+
+    await asyncio.gather(*tasks)
+
+    result_text = f"Розсилка завершена!\nУспішно: {success_count}\nНевдало: {fail_count}"
+    await callback_query.message.answer(result_text)
 
 
 @router.message(AdminStates.waiting_for_send_to_all)
