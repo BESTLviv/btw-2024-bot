@@ -60,7 +60,8 @@ admin_keyboard = InlineKeyboardMarkup(
 
 bec_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="кнопка для реєстрації📌", url="https://t.me/bec24_bot")]
+        [InlineKeyboardButton(text="Реєструйся в боті🫵", url="https://t.me/bec24_bot")],
+        [InlineKeyboardButton(text="Знаходь команду🤝", url="https://t.me/BEC_2024_find_team")]
     ],
     resize_keyboard=True,
 )
