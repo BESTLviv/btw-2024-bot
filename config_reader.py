@@ -6,4 +6,4 @@ load_dotenv(find_dotenv())
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 MONGO_URI = os.getenv('MONGO_URI')
-APP_URL = os.getenv('APP_URL')
+

@@ -50,18 +50,8 @@ main_inline_keyboard = InlineKeyboardMarkup(
 admin_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="Написати всім", callback_data="send_to_all")],
-        [InlineKeyboardButton(text="Написати всім про BEC", callback_data="send_to_all_bec")],
         [InlineKeyboardButton(text="Кількість користувачів", callback_data="get_all_users")],
         [InlineKeyboardButton(text="Кількість зареєстрованих користувачів", callback_data="get_all_registered_users")]
-    ],
-    resize_keyboard=True,
-)
-
-
-bec_keyboard = InlineKeyboardMarkup(
-    inline_keyboard=[
-        [InlineKeyboardButton(text="Реєструйся в боті🫵", url="https://t.me/bec24_bot")],
-        [InlineKeyboardButton(text="Знаходь команду🤝", url="https://t.me/BEC_2024_find_team")]
     ],
     resize_keyboard=True,
 )

@@ -19,8 +19,6 @@ def schedule_text(day):
     return text
 
 
-# треба було лінк на фото записувати у schedule_text до відповідного дня, а не всі фото перейменовувати тд
-
 @router.callback_query(F.data == "schedule")
 async def show_schedule1(callback_query: CallbackQuery):
     day = 'Пн'
@@ -61,7 +59,8 @@ async def join_best(message: Message):
     text = f"[{link_text}]({url})"
     await message.answer(text, parse_mode=ParseMode.MARKDOWN_V2, disable_web_page_preview=True)
 
-
+# херня трохи, переши потім
+# краще лінк на фото записувати у schedule_text до відповідного дня, а не всі фото перейменовувати як дні тижня тд
 @router.callback_query(lambda c: c.data.startswith('schedule_'))
 async def change_schedule(callback_query: CallbackQuery):
     day = callback_query.data.split('_')[1]
