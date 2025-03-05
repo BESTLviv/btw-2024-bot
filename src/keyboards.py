@@ -42,7 +42,7 @@ main_inline_keyboard = InlineKeyboardMarkup(
         [InlineKeyboardButton(text="Приєднатися до чату",
                               url="https://t.me/+V-ZP4rwg--A3Yjcy")],
         [InlineKeyboardButton(text="Приєднатися до BEST",
-                              url="https://docs.google.com/forms/d/e/1FAIpQLSdTcKMiPuStsqNnYsosn4wJmKXgpXpSWuq37gVVEk5OtcaT_w/viewform")],
+                              url="https://beacons.ai/best.lviv")],
     ],
     resize_keyboard=True,
 )
@@ -51,7 +51,8 @@ admin_keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="Написати всім", callback_data="send_to_all")],
         [InlineKeyboardButton(text="Кількість користувачів", callback_data="get_all_users")],
-        [InlineKeyboardButton(text="Кількість зареєстрованих користувачів", callback_data="get_all_registered_users")]
+        [InlineKeyboardButton(text="Кількість зареєстрованих користувачів", callback_data="get_all_registered_users")],
+        [InlineKeyboardButton(text="Написати всім про ..", callback_data="send_to_all_about_")],
     ],
     resize_keyboard=True,
 )
@@ -73,3 +74,11 @@ def schedule_keyboard(current_day):
             for day in days]
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+send_to_all_about__keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="Реєструйся зараз 🫵", url="https://cutt.ly/HrtPhRvB")],
+    ],
+    resize_keyboard=True,
+)
