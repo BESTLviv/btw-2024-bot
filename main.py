@@ -3,16 +3,16 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
-from config_reader import BOT_TOKEN, MONGO_URI
+import config
 from src.database import init_db
 from src.handlers import registration, schedule, admin
 
 
 async def main():
-    bot = Bot(token=BOT_TOKEN)
+    bot = Bot(token=config.BOT_TOKEN)
     dp = Dispatcher()
 
-    db = await init_db(MONGO_URI)
+    db = await init_db()
 
     dp.include_routers(
         registration.router,
