@@ -78,7 +78,7 @@ def schedule_keyboard(current_day):
 
 send_to_all_about__keyboard = InlineKeyboardMarkup(
     inline_keyboard=[
-        [InlineKeyboardButton(text="🔥Уся інформація ТУТ🔥", url="https://cutt.ly/HrtPhRvB")],
+        [InlineKeyboardButton(text="📲 Телеграм-бот – твій гід по ІЯК-у!", url="https://t.me/ejf_2025_bot")],
     ],
     resize_keyboard=True,
 )
